@@ -91,8 +91,6 @@ public class test {
 			System.out.println("10... Ulozeni jedne knihy do souboru");
 			System.out.println("11.. Precteni knihy ze souboru.");
 			System.out.println("12... ukoncit program");
-		
-			//System.out.println("Number of books in the list: " + listsbooks.size());
 
 		volba = sc.nextInt();
 		sc.nextLine();
@@ -147,7 +145,7 @@ public class test {
 					System.out.println("Vyber žánr knihy:");
 					System.out.println("1 - Romance, 2 - Horror, 3 - Historie, 4 - Fantazie, 5 - akcni");
 					int genreIndex = sc.nextInt();
-                    Roman.GenreOfBook genre = Roman.GenreOfBook.values()[genreIndex - 1]; // Adjust index
+                    Roman.GenreOfBook genre = Roman.GenreOfBook.values()[genreIndex - 1]; 
 
                     Roman kniha = new Roman(title, author, year, genre, Book.StateOfBook.VRACENO);
                     listsbooks.add(kniha);
@@ -338,28 +336,20 @@ public class test {
 			    sc.nextLine();
 			    break;
 			case 7:
-			    // Prompt the user to enter the name of the author
 			    System.out.println("Zadejte jmeno autora:");
 			    String authorName = sc.nextLine().trim();
-
-			    // Create a list to store books by the specified author
 			    List<Book> authorBooks = new ArrayList<>();
 
-			    // Iterate through the list of books to find books by the specified author
 			    for (Book book : listsbooks) {
-			        if (book.GetAuthor().equalsIgnoreCase(authorName)) { // Use getAuthor() method
+			        if (book.GetAuthor().equalsIgnoreCase(authorName)) { 
 			            authorBooks.add(book);
 			        }
 			    }
 
-			    // Check if any books by the author were found
 			    if (authorBooks.isEmpty()) {
 			        System.out.println("Autor " + authorName + " napsal žádné knihy.");
 			    } else {
-			        // Sort the list of books by year of publication (oldest to newest)
 			        Collections.sort(authorBooks, Comparator.comparingInt(Book::GetYear));
-
-			        // Display the sorted list of books
 			        System.out.println("Knihy od tohoto autora " + authorName + " od nejstaršího po nejnovější:");
 			        for (Book book : authorBooks) {
 			            System.out.println("Nazev knihy: "  + book.GetTitle() +
@@ -384,21 +374,20 @@ public class test {
 			    System.out.println("Zadejte zanr knihy, pro kterou chcete zobrazit seznam:");
 			    System.out.println("1 - Romance, 2 - Horror, 3 - Historie, 4 - Fantazie, 5 - Akcni");
 			    int genreChoice = sc.nextInt();
-			    sc.nextLine(); // Consume newline
+			    sc.nextLine();
 			    
 			    System.out.println("Seznam knih daneho zanru:");
 			    boolean booksFound = false;
 			    for (Book book : listsbooks) {
-			        if (book instanceof Roman) { // Check if the book is of type Roman
-			            Roman romanBook = (Roman) book; // Cast the book to Roman type
+			        if (book instanceof Roman) { 
+			            Roman romanBook = (Roman) book; 
 			            if (romanBook.GetGenre() != null && romanBook.GetGenre().equals(Roman.GenreOfBook.values()[genreChoice - 1].toString())) {
-			                // Check if the genre matches the user's choice
 			                System.out.println("Nazev knihy: " + book.GetTitle());
 			                System.out.println("Autor knihy: " + book.GetAuthor());
 			                System.out.println("Rok vydani knihy: " + book.GetYear());
 			                System.out.println("Zanr knihy: " + romanBook.GetGenre());
 			                System.out.println("Stav knihy: " + book.GetStateOfBook());
-			                System.out.println(); // Add a blank line for readability
+			                System.out.println(); 
 			                booksFound = true;
 			            }
 			        }
@@ -441,30 +430,23 @@ public class test {
 			case 10:
 				System.out.println("Zadejte nazev knihy, kterou chcete ulozit:");
 				String saveTitle = sc.nextLine().trim();
-
-				// Search for the book with the specified title
 				boolean FoundThisBook = false;
 				for (Book book : listsbooks) {
-				    if (book.GetTitle().equalsIgnoreCase(saveTitle)) { // Use getTitle() method
+				    if (book.GetTitle().equalsIgnoreCase(saveTitle)) /
 				        FoundThisBook = true;
-
-				        // Create a FileWriter and PrintWriter to write to a file
 				        try (FileWriter fileWriter = new FileWriter("C:/Users/Scardy3Cat/Documents/FileWithSavedBooks.txt");
 				             PrintWriter writer = new PrintWriter(fileWriter)) {
-
-				            // Write the book information to the file
 				            writer.println("Title: " + book.GetTitle());
 				            writer.println("Author: " + book.GetAuthor());
 				            writer.println("Year: " + book.GetYear());
 				            writer.println("State: " + book.GetStateOfBook());
-				            // Add other attributes as needed
 
 				            System.out.println("Kniha byla uspesne ulozena do souboru 'FileWithSavedBooks.txt'.");
 				        } catch (IOException e) {
 				            System.out.println("Chyba pri zapisu do souboru.");
 				        }
 
-				        break; // Exit the loop after saving the book
+				        break;
 				    }
 				}
 
@@ -481,7 +463,7 @@ public class test {
 			            String line;
 			            System.out.println("Contents of the 'FileWithSavedBooks.txt':");
 			            while ((line = reader.readLine()) != null) {
-			                System.out.println(line); // Display each line of the file
+			                System.out.println(line);
 			            }
 			        } catch (IOException e) {
 			            e.printStackTrace();
@@ -498,10 +480,9 @@ public class test {
 
 				    public static void saveToDatabase(List<Book> books) {
 				        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
-				            // Create tables if they don't exist
+				            
 				            createTables(conn);
 
-				            // Insert book information into the database
 				            for (Book book : books) {
 				                insertBook(conn, book);
 				            }
