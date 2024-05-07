@@ -92,8 +92,13 @@ public class test {
 			System.out.println("11.. Precteni knihy ze souboru.");
 			System.out.println("12... ukoncit program");
 
-		volba = sc.nextInt();
-		sc.nextLine();
+		try {
+			volba = sc.nextInt();
+			sc.nextLine();}
+		catch (InputMismatchException e) {
+			System.out.println("Program bere pouze cisla, napiste prosim cislo.");
+			sc.nextLine();
+		}	
 		
 		switch (volba) {
 			case 1:
